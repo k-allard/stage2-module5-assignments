@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LocalProcessor {
-    protected String processorVersion;
+    protected String processorVersion = "";
     private List<String> stringArrayList = new LinkedList<>();
     private Scanner informationScanner;
     private String processorName;
@@ -29,6 +29,8 @@ public class LocalProcessor {
         this.period = period;
         this.processorVersion = processorVersion;
         this.valueOfCheap = valueOfCheap;
+        if (informationScanner == null)
+            throw new IllegalStateException();
         this.informationScanner = informationScanner;
         this.stringArrayList = stringArrayList;
     }
@@ -56,19 +58,14 @@ public class LocalProcessor {
     @ReadFullProcessorNameAnnotation
     public void readFullProcessorName(File file) {
         stringBuilder = new StringBuilder();
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(file);
+        try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNext()) {
                 stringBuilder.append(scanner.nextLine());
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } finally {
-            if (scanner != null) {
-                scanner.close();
-            }
         }
-        processorVersion = String.valueOf(stringBuilder);
+        if (stringBuilder != null)
+            processorVersion = String.valueOf(stringBuilder);
     }
 }

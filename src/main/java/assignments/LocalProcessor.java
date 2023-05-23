@@ -16,14 +16,15 @@ import lombok.Setter;
 @Setter
 public class LocalProcessor {
     protected String processorVersion;
-    List<String> stringArrayList = new LinkedList<>();
-    Scanner informationScanner;
+    private List<String> stringArrayList = new LinkedList<>();
+    private Scanner informationScanner;
     private String processorName;
     private Long period = 10_000_000_000_000L;
     private Integer valueOfCheap;
+    private StringBuilder stringBuilder;
 
     public LocalProcessor(String processorName, Long period, String processorVersion, Integer valueOfCheap,
-                          Scanner informationScanner, LinkedList<String> stringArrayList) {
+                          Scanner informationScanner, List<String> stringArrayList) {
         this.processorName = processorName;
         this.period = period;
         this.processorVersion = processorVersion;
@@ -36,14 +37,14 @@ public class LocalProcessor {
     }
 
     @ListIteratorAnnotation
-    public void listIterator(LinkedList<String> stringList) {
+    public void listIterator(List<String> stringList) {
         for (String str : stringList) {
             System.out.println(str.hashCode());
         }
     }
 
     @FullNameProcessorGeneratorAnnotation
-    public String fullNameProcessorGenerator(LinkedList<String> stringList) {
+    public String fullNameProcessorGenerator(List<String> stringList) {
         StringBuilder stringBuilder = new StringBuilder();
         for (String str : stringList) {
             stringBuilder.append(str).append(' ');
@@ -56,7 +57,7 @@ public class LocalProcessor {
         StringBuilder stringBuilder = new StringBuilder();
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNext()) {
-                stringBuilder.append(informationScanner.nextLine());
+                stringBuilder.append(scanner.nextLine());
             }
         } catch (FileNotFoundException fileNotFoundException) {
             fileNotFoundException.printStackTrace();

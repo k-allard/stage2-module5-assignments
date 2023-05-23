@@ -57,6 +57,8 @@ public class LocalProcessor {
     public void readFullProcessorName(File file) {
         stringBuilder = new StringBuilder();
         try (Scanner scanner = new Scanner(file)) {
+            if (scanner == null)
+                throw new IllegalStateException();
             while (scanner.hasNext()) {
                 stringBuilder.append(scanner.nextLine());
             }

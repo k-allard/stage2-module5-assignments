@@ -56,14 +56,18 @@ public class LocalProcessor {
     @ReadFullProcessorNameAnnotation
     public void readFullProcessorName(File file) {
         stringBuilder = new StringBuilder();
-        try (Scanner scanner = new Scanner(file)) {
-            if (scanner == null)
-                throw new IllegalStateException();
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 stringBuilder.append(scanner.nextLine());
             }
-        } catch (FileNotFoundException fileNotFoundException) {
-            fileNotFoundException.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (scanner != null) {
+                scanner.close();
+            }
         }
         processorVersion = String.valueOf(stringBuilder);
     }

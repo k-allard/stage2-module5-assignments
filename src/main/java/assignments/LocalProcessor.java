@@ -52,14 +52,14 @@ public class LocalProcessor {
     }
 
     @ReadFullProcessorNameAnnotation
-    public void readFullProcessorName(File file) throws FileNotFoundException {
+    public void readFullProcessorName(File file) {
         StringBuilder stringBuilder = new StringBuilder();
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNext()) {
                 stringBuilder.append(informationScanner.nextLine());
             }
-        } catch (FileNotFoundException fnfe) {
-            fnfe.printStackTrace();
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
         }
         processorVersion = stringBuilder.toString();
     }
